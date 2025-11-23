@@ -198,12 +198,42 @@ int main() {
     // Create graph
     Graph neighborhood(edges);
 
-    // Print adjacency list representation of graph
-    neighborhood.printNeighborhood();
-    neighborhood.DFS(0);
-    neighborhood.BFS(0);
-    neighborhood.shortestPath(0);
-    neighborhood.minimumSpanningTree();
+    int choice;
+    do {
+        cout << "\nNeighborhood Navigation Menu:\n";
+        cout << "====================================\n";
+        cout << "[1] Display neighborhood walking map\n";
+        cout << "[2] Explore neighborhood by BFS\n";
+        cout << "[3] Explore neighborhood by DFS\n";
+        cout << "[4] Show shortest walking times from My House\n";
+        cout << "[5] Show minimum spanning tree of paths\n";
+        cout << "[0] Exit\n";
+        cout << "Enter your choice: ";
+
+        cin >> choice;
+        
+        if (choice == 0) break;
+
+        switch (choice) {
+            case 1:
+                
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+            default:
+            cout << "Invalid option.\n";
+        }
+    }
 
     return 0;
 }
