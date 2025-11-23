@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <string>
 using namespace std;
 
 const int SIZE = 9;
@@ -45,10 +46,10 @@ public:
     }
 
     void printNeighborhood() {
-        cout << "\nNeighborhod Walking Map\n";
+        cout << "\nNeighborhood Walking Map\n";
         cout << "==========================\n";
 
-        for (int i = 0, i < SIZE; i++) {
+        for (int i = 0; i < SIZE; i++) {
             cout << locations[i] << " connects to:\n";
             for (Pair p : adjList[i]) {
                 cout << "  → " << locations[p.first]
@@ -72,7 +73,7 @@ public:
 
     void DFS(int start) {
         vector<bool> visited(SIZE, false);
-        cout << "n\nDFS Route Inspection (deep exploration)\n";
+        cout << "\nDFS Route Inspection (deep exploration)\n";
         cout << "Starting from " << locations[start] << endl;
         cout << "====================================\n";
 
@@ -86,22 +87,23 @@ public:
         visited[start] = true;
         q.push(start);
 
-        cout << "BFS starting from vertex " << start << ":" << endl;
+        cout << "\nBFS Neighborhood Spread (layer-by-layer)\n";
+        cout << "Starting from " << locations[start] << endl;
+        cout << "====================================\n";
 
         while (!q.empty()) {
             int u = q.front();
             q.pop();
-            cout << u << " ";
+            
+            cout << "Reached " << locations[u] << endl;
 
             for (Pair p : adjList[u]) {
-                int v = p.first;
-                if (!visited[v]) {
-                    visited[v] = true;
-                    q.push(v);
+                if (!visited[p.first]) {
+                    visited[p.first] = true;
+                    q.push(p.first);
                 }
             }
         }
-        cout << endl;
     }
 };
 
@@ -118,12 +120,12 @@ int main() {
     };
 
     // Create graph
-    Graph graph(edges);
+    Graph neighborhood(edges);
 
     // Print adjacency list representation of graph
-    graph.printGraph();
-    graph.DFS(0);
-    graph.BFS(0);
+    neighborhood.printNeighborhood();
+    neighborhood.DFS(0);
+    neighborhood.BFS(0);
 
     return 0;
 }
