@@ -214,21 +214,22 @@ int main() {
         
         if (choice == 0) break;
 
+        // still mapping out what i have to do..!
         switch (choice) {
             case 1:
-                
+                neighborhod.printNeighborhood();
                 break;
             case 2:
-
+                neighborhood.DFS(0);
                 break;
             case 3:
-
+                neighborhood.BFS(0);
                 break;
             case 4:
-
+                neighborhood.shortestpath(0);
                 break;
             case 5:
-
+                 neighborhood.minimumSpanningTree();
                 break;
             default:
             cout << "Invalid option.\n";
