@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 using namespace std;
 
 const int SIZE = 7;
@@ -22,12 +23,12 @@ public:
 
         // Add edges to the graph (undirected)
         for (auto &edge : edges) {
-            int src = edge.src;
-            int dest = edge.dest;
-            int weight = edge.weight;
+            int u = edge.src;
+            int v = edge.dest;
+            int w = edge.weight;
 
-            adjList[src].push_back(make_pair(dest, weight));
-            adjList[dest].push_back(make_pair(src, weight)); // undirected
+            adjList[u].push_back(make_pair(u, w));
+            adjList[v].push_back(make_pair(u, w)); // undirected
         }
     }
 
@@ -36,10 +37,55 @@ public:
         cout << "Graph's adjacency list:" << endl;
         for (int i = 0; i < adjList.size(); i++) {
             cout << i << " --> ";
-            for (Pair v : adjList[i])
-                cout << "(" << v.first << ", " << v.second << ") ";
+            for (Pair p : adjList[i])
+                cout << "(" << p.first << ", " << p.second << ") ";
             cout << endl;
         }
+    }
+
+    // DFS helper (recursive)
+    void DFSUtil(int u, vector<bool> &visited) {
+        visited[u] = true;
+        cout << u << " ";
+
+        for (Pair p : adjList[u]) {
+            int v = p.first;
+            if (!visited[v]) {
+                DFSUtil(v, visited);
+            }
+        }
+    }
+
+    void DFS(int start) {
+        vector<bool> visited(SIZE, false);
+        cout << "DFS starting from vertex " << start << ":" << endl;
+        DFSUtil(start, visited);
+        cout << endl;
+    }
+
+    void BFS(int start) {
+        vector<bool> visited(SIZE, false);
+        queue<int> q;
+
+        visited[start] = true;
+        q.push(start);
+
+        cout << "BFS starting from vertex " << start << ":" << endl;
+
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+            cout << u << " ";
+
+            for (Pair p : adjList[u]) {
+                int v = p.first;
+                if (!visited[v]) {
+                    visited[v] = true;
+                    q.push(v);
+                }
+            }
+        }
+        cout << endl;
     }
 };
 
@@ -57,6 +103,8 @@ int main() {
 
     // Print adjacency list representation of graph
     graph.printGraph();
+    graph.DFS(0);
+    graph.BFS(0);
 
     return 0;
 }
