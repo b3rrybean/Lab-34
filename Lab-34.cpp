@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include <string>
+#include <climits>
 using namespace std;
 
 const int SIZE = 9;
@@ -105,6 +106,38 @@ public:
             }
         }
     }
+
+    // ---------- SHORTEST PATH (DIJKSTRA) ----------
+    void shortestPath(int start) {
+        vector<int> distance(SIZE, INT_MAX);
+        distance[start] = 0;
+
+        priority_queue<Pair, vector<Pair>, greater<Pair>> pq;
+        pq.push({0, start});
+
+        while (!pq.empty()) {
+            int currentNode = pq.top().second;
+            pq.pop();
+
+            for (Pair neighbor : adjList[currentNode]) {
+                int nextNode = neighbor.first;
+                int weight = neighbor.second;
+
+                if (distance[currentNode] + weight < distance[nextNode]) {
+                    distance[nextNode] = distance[currentNode] + weight;
+                    pq.push({distance[nextNode], nextNode});
+                }
+            }
+        }
+
+        cout << "\nShortest path from node " << start 
+             << " (" << locations[start] << "):\n";
+
+        for (int i = 0; i < SIZE; i++) {
+            cout << start << " -> " << i << " : " << distance[i]
+                 << " mins (" << locations[i] << ")\n";
+        }
+    }
 };
 
 int main() {
@@ -126,6 +159,8 @@ int main() {
     neighborhood.printNeighborhood();
     neighborhood.DFS(0);
     neighborhood.BFS(0);
+
+    neighborhood.shortestPath(0);
 
     return 0;
 }
