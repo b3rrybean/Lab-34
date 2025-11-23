@@ -16,6 +16,18 @@ public:
     // A vector of vectors of Pairs to represent an adjacency list
     vector<vector<Pair>> adjList;
 
+    vector<string> locations = {
+        "My House",
+        "Coffee Shop",
+        "Park",
+        "Library",
+        "Grocery Store",
+        "School",
+        "Community Center",
+        "Dog Park",
+        "Playground"
+    };
+
     // Graph Constructor
     Graph(vector<Edge> const &edges) {
         // Resize the vector to hold SIZE elements
@@ -32,13 +44,16 @@ public:
         }
     }
 
-    // Print the graph's adjacency list
-    void printGraph() {
-        cout << "Graph's adjacency list:" << endl;
-        for (int i = 0; i < adjList.size(); i++) {
-            cout << i << " --> ";
-            for (Pair p : adjList[i])
-                cout << "(" << p.first << ", " << p.second << ") ";
+    void printNeighborhood() {
+        cout << "\nNeighborhod Walking Map\n";
+        cout << "==========================\n";
+
+        for (int i = 0, i < SIZE; i++) {
+            cout << locations[i] << " connects to:\n";
+            for (Pair p : adjList[i]) {
+                cout << "  → " << locations[p.first]
+                     << " (Walking time: " << p.second << " mins)\n";
+            }
             cout << endl;
         }
     }
@@ -46,21 +61,22 @@ public:
     // DFS helper (recursive)
     void DFSUtil(int u, vector<bool> &visited) {
         visited[u] = true;
-        cout << u << " ";
+        cout << "Inspecting " << locations[u] << endl;
 
         for (Pair p : adjList[u]) {
-            int v = p.first;
-            if (!visited[v]) {
-                DFSUtil(v, visited);
+            if (!visited[p.first]) {
+                DFSUtil(p.first, visited);
             }
         }
     }
 
     void DFS(int start) {
         vector<bool> visited(SIZE, false);
-        cout << "DFS starting from vertex " << start << ":" << endl;
+        cout << "n\nDFS Route Inspection (deep exploration)\n";
+        cout << "Starting from " << locations[start] << endl;
+        cout << "====================================\n";
+
         DFSUtil(start, visited);
-        cout << endl;
     }
 
     void BFS(int start) {
