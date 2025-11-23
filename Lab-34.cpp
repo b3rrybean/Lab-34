@@ -138,6 +138,49 @@ public:
                  << " mins (" << locations[i] << ")\n";
         }
     }
+
+    // ---------- MINIMUM SPANNING TREE (PRIM'S) ----------
+    void minimumSpanningTree() {
+        vector<bool> inMST(SIZE, false);
+        vector<int> key(SIZE, INT_MAX);
+        vector<int> parent(SIZE, -1);
+
+        key[0] = 0;  // Start from node 0 (My House)
+
+        for (int count = 0; count < SIZE - 1; count++) {
+            int minKey = INT_MAX;
+            int u = -1;
+
+            // Find vertex with minimum key not yet included
+            for (int v = 0; v < SIZE; v++) {
+                if (!inMST[v] && key[v] < minKey) {
+                    minKey = key[v];
+                    u = v;
+                }
+            }
+
+            inMST[u] = true;
+
+            for (Pair neighbor : adjList[u]) {
+                int v = neighbor.first;
+                int weight = neighbor.second;
+
+                if (!inMST[v] && weight < key[v]) {
+                    key[v] = weight;
+                    parent[v] = u;
+                }
+            }
+        }
+
+        cout << "\nMinimum Spanning Tree edges:\n";
+        cout << "====================================\n";
+
+        for (int i = 1; i < SIZE; i++) {
+            cout << "Edge from " << locations[parent[i]]
+                 << " to " << locations[i]
+                 << " with walking time: " << key[i] << " mins\n";
+        }
+    }
 };
 
 int main() {
@@ -159,8 +202,8 @@ int main() {
     neighborhood.printNeighborhood();
     neighborhood.DFS(0);
     neighborhood.BFS(0);
-
     neighborhood.shortestPath(0);
+    neighborhood.minimumSpanningTree();
 
     return 0;
 }
