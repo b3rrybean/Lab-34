@@ -3,6 +3,7 @@
 #include <queue>
 #include <string>
 #include <climits>
+#include <functional>
 using namespace std;
 
 const int SIZE = 9;
@@ -214,19 +215,18 @@ int main() {
         
         if (choice == 0) break;
 
-        // still mapping out what i have to do..!
         switch (choice) {
             case 1:
-                neighborhod.printNeighborhood();
+                neighborhood.printNeighborhood();
                 break;
             case 2:
-                neighborhood.DFS(0);
-                break;
-            case 3:
                 neighborhood.BFS(0);
                 break;
+            case 3:
+                neighborhood.DFS(0);
+                break;
             case 4:
-                neighborhood.shortestpath(0);
+                neighborhood.shortestPath(0);
                 break;
             case 5:
                  neighborhood.minimumSpanningTree();
@@ -234,7 +234,7 @@ int main() {
             default:
             cout << "Invalid option.\n";
         }
-    }
+    } while (choice != 0);
 
     return 0;
 }
